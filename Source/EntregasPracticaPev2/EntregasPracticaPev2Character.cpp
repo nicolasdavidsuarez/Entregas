@@ -11,12 +11,16 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "EntregasPracticaPev2.h"
+#include "EntregaPractica01/InteractableInterface.h"
+#include "EntregaPractica01/FragmentComponent.h"
 
 AEntregasPracticaPev2Character::AEntregasPracticaPev2Character()
 {
+
+	FragmentComponent = CreateDefaultSubobject<UFragmentComponent>(TEXT("FragmentComponent"));
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
-		
+			
 	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
@@ -53,6 +57,25 @@ AEntregasPracticaPev2Character::AEntregasPracticaPev2Character()
 void AEntregasPracticaPev2Character::AplicarDanio(float danio)
 {
 	salud-=danio;
+	GEngine->AddOnScreenDebugMessage(-1,3.0f,FColor::Red,FString::Printf(TEXT("Daño Aplicado: %f"), danio));
+	GEngine->AddOnScreenDebugMessage(-1,3.0f,FColor::Red,FString::Printf(TEXT("Salud Actual: %f"), salud));
+
+}
+
+void AEntregasPracticaPev2Character::OnInteract()
+{
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("OnInteract"));
+		TArray<AActor*> OverlappedActors;
+	GetOverlappingActors(OverlappedActors);
+
+	for (AActor* Actor : OverlappedActors)
+	{		
+		if (Actor && Actor->Implements<UInteractableInterface>())
+		{			
+			IInteractableInterface::Execute_Interact(Actor, this);
+			break; 
+		}
+	}
 }
 
 void AEntregasPracticaPev2Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -67,7 +90,8 @@ void AEntregasPracticaPev2Character::SetupPlayerInputComponent(UInputComponent* 
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AEntregasPracticaPev2Character::Move);
 		EnhancedInputComponent->BindAction(MouseLookAction, ETriggerEvent::Triggered, this, &AEntregasPracticaPev2Character::Look);
-
+//INTERACT!!!
+		EnhancedInputComponent->BindAction(Interact, ETriggerEvent::Started, this, &AEntregasPracticaPev2Character::OnInteract);
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AEntregasPracticaPev2Character::Look);
 	}

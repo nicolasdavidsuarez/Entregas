@@ -11,6 +11,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UInputAction;
 struct FInputActionValue;
+class UFragmentComponent;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
@@ -22,6 +23,9 @@ UCLASS(abstract)
 class AEntregasPracticaPev2Character : public ACharacter
 {
 	GENERATED_BODY()
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UFragmentComponent* FragmentComponent;
 
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
@@ -52,12 +56,16 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* MouseLookAction;
 
+	UPROPERTY(EditAnywhere, Category="Input")
+	UInputAction* Interact;
+
 public:
 
 	/** Constructor */
 	AEntregasPracticaPev2Character();
 	UFUNCTION(BlueprintCallable)
 	void AplicarDanio(float danio);
+	//void OnInteract();
 
 protected:
 
@@ -89,6 +97,9 @@ public:
 	/** Handles jump pressed inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoJumpEnd();
+
+	UFUNCTION(BlueprintCallable, Category="Input")
+	virtual void OnInteract();
 
 public:
 

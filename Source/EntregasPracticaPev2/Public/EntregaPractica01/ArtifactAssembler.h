@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "ArtifactAssembler.generated.h"
 
+class USphereComponent;
+class SphereComponent;
 UCLASS()
 class ENTREGASPRACTICAPEV2_API AArtifactAssembler : public AActor, public IInteractableInterface
 {
@@ -15,6 +17,13 @@ class ENTREGASPRACTICAPEV2_API AArtifactAssembler : public AActor, public IInter
 public:
 	// Sets default values for this actor's properties
 	AArtifactAssembler();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UStaticMeshComponent* Mesh;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USphereComponent* Sphere;
+	
 	virtual void Interact_Implementation(AActor* Interactor) override;
 
 	UFUNCTION()
@@ -25,9 +34,11 @@ public:
 private:
 	int32 TotalFragmentsInLevel = 0;
 	int32 CollectedCount = 0;
-	bool bCanBeActivated = false;
+	bool bCanBeAssemble = false;
 	TArray<AActor*> Fragments;
 	FTimerHandle ArtifactTimerHandle;
+	
+
 	
 protected:
 	// Called when the game starts or when spawned

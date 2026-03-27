@@ -29,7 +29,7 @@ void AFragmenItem::Tick(float DeltaTime)
 
 void AFragmenItem::Interact_Implementation(AActor* Interactor)
 {
-	
+	GEngine->AddOnScreenDebugMessage(-1,3,FColor::Red, "Interact_Implementation");
 	if (UFragmentComponent* FragComp = Interactor->FindComponentByClass<UFragmentComponent>())
 	{
 		FragComp->AddFragment(FragmentID);

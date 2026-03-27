@@ -7,6 +7,9 @@
 #include "GameFramework/Actor.h"
 #include "AItemBase.generated.h"
 
+class USphereComponent;
+class UStaticMeshComponent;
+
 UCLASS()
 class ENTREGASPRACTICAPEV2_API AAItemBase : public AActor, public IInteractableInterface
 {
@@ -15,6 +18,13 @@ class ENTREGASPRACTICAPEV2_API AAItemBase : public AActor, public IInteractableI
 public:
 	// Sets default values for this actor's properties
 	AAItemBase();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UStaticMeshComponent* Mesh;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USphereComponent* Sphere;
+	
 	virtual void Interact_Implementation(AActor* Interactor) override;
 	
 protected:
