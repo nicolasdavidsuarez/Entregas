@@ -68,13 +68,18 @@ void AEntregasPracticaPev2Character::BeginPlay()
 	Super::BeginPlay();
 	if(HealtComponent)
 	{
-		HealtComponent->OnTakeDamage.AddDynamic(this,AEntregasPracticaPev2Character::CountDamage);
+		HealtComponent->OnTakeDamage.AddDynamic(this,&AEntregasPracticaPev2Character::CountDamage);
 	}
 }
 
 void AEntregasPracticaPev2Character::CountDamage(int32 amount)
 {
 	TotalCount=+amount;
+}
+
+int32 AEntregasPracticaPev2Character::getDamage()
+{
+	return TotalCount;
 }
 
 void AEntregasPracticaPev2Character::OnInteract()

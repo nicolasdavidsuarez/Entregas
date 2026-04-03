@@ -38,3 +38,8 @@ void UHealtComponent::TakeDamage(int32 amount)
 	CurretnHealt=+amount;
 }
 
+int32 UHealtComponent::GetCurrentHealth()
+{
+	return CurretnHealt;
+}
+

@@ -30,6 +30,8 @@ public:
 	
 	UPROPERTY(EditAnywhere)
 	FOnTakeDamage OnTakeDamage;
+
+int32 GetCurrentHealth();
 	
 	private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Healt" ,meta = (AllowPrivateAccess = "true"))

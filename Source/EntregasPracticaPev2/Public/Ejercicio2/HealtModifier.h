@@ -34,7 +34,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
+
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Healt Modifier")
 	int32 amount;
 	
@@ -46,4 +46,6 @@ private:
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Healt Modifier")
 	UHealtComponent* OtherHealtComponent;
+
+	int32 CantidadDeInteracciones=0;
 };

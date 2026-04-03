@@ -3,6 +3,7 @@
 
 #include "HealtModifier.h"
 
+#include "EntregasPracticaPev2Character.h"
 #include "HealtComponent.h"
 #include "Components/BoxComponent.h"
 
@@ -12,6 +13,11 @@ AHealtModifier::AHealtModifier()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	
+	VolumenModifier=CreateDefaultSubobject<UBoxComponent>("VolumenModifier");
+	VolumenModifier->SetBoxExtent(FVector(250.0f, 250.0f, 250.0f));
+
+	SetRootComponent(VolumenModifier);
 	
 }
 
@@ -30,21 +36,28 @@ void AHealtModifier::NotifyActorBeginOverlap(AActor* OtherActor)
 void AHealtModifier::NotifyActorEndOverlap(AActor* OtherActor)
 {
 	Super::NotifyActorEndOverlap(OtherActor);
+AEntregasPracticaPev2Character* actor=Cast<AEntregasPracticaPev2Character>(OtherActor);
+	int cant= actor->getDamage();
+	GEngine->AddOnScreenDebugMessage(-1,3.0f,FColor::Red,FString::Printf(TEXT("cantidad de veces que se Aplico Modificador: %d"),CantidadDeInteracciones));
 	OtherHealtComponent = nullptr;
 }
 
 void AHealtModifier::AplyModifier()
 {
-	if (bIsHealt)
+	if (OtherHealtComponent)
 	{
-		OtherHealtComponent->TakeDamage(amount);
-		GEngine->AddOnScreenDebugMessage(-1,1.f,FColor::Green,"Health");
+		if (bIsHealt)
+		{
+			OtherHealtComponent->TakeDamage(amount);
+			GEngine->AddOnScreenDebugMessage(-1,1.f,FColor::Green,FString::Printf(TEXT("Health: %d"),OtherHealtComponent->GetCurrentHealth()));
 
-	}else
-	{
-		OtherHealtComponent->TakeDamage(-amount);
-		GEngine->AddOnScreenDebugMessage(-1,1.f,FColor::Red,"Damaged");
-
+		}else
+		{
+			OtherHealtComponent->TakeDamage(-amount);
+			GEngine->AddOnScreenDebugMessage(-1,1.f,FColor::Red,FString::Printf(TEXT("Damaged: %d"),OtherHealtComponent->GetCurrentHealth()));
+	
+		}
+		CantidadDeInteracciones++;
 	}
 }
 
@@ -52,16 +65,16 @@ void AHealtModifier::AplyModifier()
 void AHealtModifier::BeginPlay()
 {
 	Super::BeginPlay();
-	VolumenModifier=CreateDefaultSubobject<UBoxComponent>("VolumenModifier");
-	VolumenModifier->SetBoxExtent(FVector(250.0f, 250.0f, 250.0f));
 	if (bIsHealt)
 	{
-		VolumenModifier->SetOverlayColor(FColor::Green);
+		//VolumenModifier->SetOverlayColor(FColor::Green);
+		VolumenModifier->ShapeColor = FColor::Green;
 	}else
 	{
-		VolumenModifier->SetOverlayColor(FColor::Red);
+		VolumenModifier->ShapeColor=(FColor::Red);
 	}
 	VolumenModifier->MarkRenderStateDirty();
+	
 }
 
 // Called every frame

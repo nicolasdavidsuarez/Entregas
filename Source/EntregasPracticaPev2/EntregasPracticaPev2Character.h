@@ -73,7 +73,12 @@ public:
 
 	void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable)
 	void CountDamage(int32 amount);
+
+
+	UFUNCTION(BlueprintCallable)
+	int32 getDamage();
 
 protected:
 
