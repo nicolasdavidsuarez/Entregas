@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "HealtComponent.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 #include "EntregasPracticaPev2Character.generated.h"
@@ -27,6 +28,9 @@ class AEntregasPracticaPev2Character : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UFragmentComponent* FragmentComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UHealtComponent* HealtComponent;
+	
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* CameraBoom;
@@ -66,6 +70,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AplicarDanio(float danio);
 	//void OnInteract();
+
+	void BeginPlay() override;
+
+	void CountDamage(int32 amount);
 
 protected:
 
@@ -108,5 +116,7 @@ public:
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	int32 TotalCount=0;
 };
 

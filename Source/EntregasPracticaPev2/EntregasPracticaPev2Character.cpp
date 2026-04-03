@@ -14,10 +14,11 @@
 #include "EntregaPractica01/InteractableInterface.h"
 #include "EntregaPractica01/FragmentComponent.h"
 
-AEntregasPracticaPev2Character::AEntregasPracticaPev2Character()
+AEntregasPracticaPev2Character::AEntregasPracticaPev2Character() 
 {
 
 	FragmentComponent = CreateDefaultSubobject<UFragmentComponent>(TEXT("FragmentComponent"));
+	HealtComponent=CreateDefaultSubobject<UHealtComponent>(TEXT("HealtComponent"));
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 			
@@ -60,6 +61,20 @@ void AEntregasPracticaPev2Character::AplicarDanio(float danio)
 	GEngine->AddOnScreenDebugMessage(-1,3.0f,FColor::Red,FString::Printf(TEXT("Daño Aplicado: %f"), danio));
 	GEngine->AddOnScreenDebugMessage(-1,3.0f,FColor::Red,FString::Printf(TEXT("Salud Actual: %f"), salud));
 
+}
+
+void AEntregasPracticaPev2Character::BeginPlay()
+{
+	Super::BeginPlay();
+	if(HealtComponent)
+	{
+		HealtComponent->OnTakeDamage.AddDynamic(this,AEntregasPracticaPev2Character::CountDamage);
+	}
+}
+
+void AEntregasPracticaPev2Character::CountDamage(int32 amount)
+{
+	TotalCount=+amount;
 }
 
 void AEntregasPracticaPev2Character::OnInteract()
