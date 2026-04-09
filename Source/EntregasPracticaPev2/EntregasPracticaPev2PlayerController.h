@@ -54,7 +54,8 @@ public:
 
 	/** Input mapping context setup */
 	virtual void SetupInputComponent() override;
-	
+
+	UFUNCTION()
 	void ActualizarHUD(int32 amount);
 
 	void OnPossess(APawn* InPawn) override;

@@ -11,6 +11,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "EntregasPracticaPev2.h"
+#include "EntregasPracticaPev2PlayerController.h"
 #include "UserWidgetHud.h"
 #include "Blueprint/UserWidget.h"
 #include "EntregaPractica01/InteractableInterface.h"
@@ -88,10 +89,13 @@ void AEntregasPracticaPev2Character::CountDamage(int32 amount)
 	float PorcentajeVida = (float)HealtComponent->GetCurrentHealth() / (float)HealtComponent->GetMaxHealth();
 
 	//GetController()->
-	//CurrentHUD->HealthBar->SetPercent(PorcentajeVida);
+	AEntregasPracticaPev2PlayerController* PC = Cast<AEntregasPracticaPev2PlayerController>(GetController());
+	if (IsLocallyControlled())
+	{
+		PC->CurrentHUD->HealthBar->SetPercent(PorcentajeVida);
+	}
 	GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Green,
-		FString::Printf(TEXT("le mando %f"), PorcentajeVida));
-	
+		FString::Printf(TEXT("le mando %f"), PorcentajeVida));	
 	
 }
 

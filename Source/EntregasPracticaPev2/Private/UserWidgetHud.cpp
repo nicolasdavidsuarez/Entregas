@@ -2,3 +2,9 @@
 
 
 #include "UserWidgetHud.h"
+
+void UUserWidgetHud::NativeConstruct()
+{
+	Super::NativeConstruct();
+	
+}
