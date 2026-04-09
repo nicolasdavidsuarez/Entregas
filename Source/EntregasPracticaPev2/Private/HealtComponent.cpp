@@ -2,6 +2,7 @@
 
 
 #include "HealtComponent.h"
+#include "Net/UnrealNetwork.h"
 
 
 // Sets default values for this component's properties
@@ -35,11 +36,28 @@ void UHealtComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 void UHealtComponent::TakeDamage(int32 amount)
 {
-	CurretnHealt=+amount;
+	CurretnHealt=CurretnHealt+amount;
+	OnTakeDamage.Broadcast(CurretnHealt);
+}
+
+int32 UHealtComponent::GetMaxHealth()
+{
+	return MaxHealt;
 }
 
 int32 UHealtComponent::GetCurrentHealth()
 {
 	return CurretnHealt;
+}
+
+void UHealtComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	DOREPLIFETIME(UHealtComponent, CurretnHealt);
+}
+
+void UHealtComponent::OnRep_CurrentHealth()
+{
+	OnTakeDamage.Broadcast(0);
 }
 

@@ -28,8 +28,7 @@ class AEntregasPracticaPev2Character : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UFragmentComponent* FragmentComponent;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	UHealtComponent* HealtComponent;
+	
 	
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
@@ -41,9 +40,15 @@ class AEntregasPracticaPev2Character : public ACharacter
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Healt", meta = (AllowPrivateAccess = "true"))
 	float salud=100;
-	
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	UHealtComponent* HealtComponent;
 protected:
 
+
+	//funcion para despues ejecute el delegado del healt component
+	//void SetHealthPercent(float Percent);
+	
 	/** Jump Input Action */
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* JumpAction;

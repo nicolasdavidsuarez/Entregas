@@ -27,14 +27,19 @@ public:
 	                           FActorComponentTickFunction* ThisTickFunction) override;
 
 	void TakeDamage(int32 amount);
+
+	int32 GetMaxHealth();
 	
 	UPROPERTY(EditAnywhere)
 	FOnTakeDamage OnTakeDamage;
 
 int32 GetCurrentHealth();
+
+	UFUNCTION()
+	void OnRep_CurrentHealth();
 	
 	private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Healt" ,meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(ReplicatedUsing = OnRep_CurrentHealth)
 	int32 CurretnHealt=100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category="Healt" ,meta = (AllowPrivateAccess = "true"))

@@ -49,12 +49,12 @@ void AHealtModifier::AplyModifier()
 		if (bIsHealt)
 		{
 			OtherHealtComponent->TakeDamage(amount);
-			GEngine->AddOnScreenDebugMessage(-1,1.f,FColor::Green,FString::Printf(TEXT("Health: %d"),OtherHealtComponent->GetCurrentHealth()));
+			GEngine->AddOnScreenDebugMessage(-1,10.0f,FColor::Green,FString::Printf(TEXT("Health: %d"),OtherHealtComponent->GetCurrentHealth()));
 
 		}else
 		{
 			OtherHealtComponent->TakeDamage(-amount);
-			GEngine->AddOnScreenDebugMessage(-1,1.f,FColor::Red,FString::Printf(TEXT("Damaged: %d"),OtherHealtComponent->GetCurrentHealth()));
+			GEngine->AddOnScreenDebugMessage(-1,10.0f,FColor::Red,FString::Printf(TEXT("Damaged: %d"),OtherHealtComponent->GetCurrentHealth()));
 	
 		}
 		CantidadDeInteracciones++;

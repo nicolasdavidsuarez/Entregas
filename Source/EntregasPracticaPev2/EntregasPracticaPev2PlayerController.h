@@ -20,6 +20,20 @@ class AEntregasPracticaPev2PlayerController : public APlayerController
 	
 protected:
 
+
+	
+public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UI")
+	TSubclassOf<class UUserWidgetHud> HUDWidgetClass;
+
+	UPROPERTY()
+	class UUserWidgetHud* CurrentHUD;
+
+	
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget), Category = "UI")
+	class UProgressBar* HealthBar;
+
 	/** Input Mapping Contexts */
 	UPROPERTY(EditAnywhere, Category ="Input|Input Mappings")
 	TArray<UInputMappingContext*> DefaultMappingContexts;
@@ -40,5 +54,9 @@ protected:
 
 	/** Input mapping context setup */
 	virtual void SetupInputComponent() override;
+	
+	void ActualizarHUD(int32 amount);
 
+	void OnPossess(APawn* InPawn) override;
+	
 };

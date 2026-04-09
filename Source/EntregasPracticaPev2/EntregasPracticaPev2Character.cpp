@@ -11,8 +11,13 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "EntregasPracticaPev2.h"
+#include "UserWidgetHud.h"
+#include "Blueprint/UserWidget.h"
 #include "EntregaPractica01/InteractableInterface.h"
+#include "Blueprint/UserWidget.h"
+#include "Components/ProgressBar.h"
 #include "EntregaPractica01/FragmentComponent.h"
+
 
 AEntregasPracticaPev2Character::AEntregasPracticaPev2Character() 
 {
@@ -53,6 +58,7 @@ AEntregasPracticaPev2Character::AEntregasPracticaPev2Character()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
 }
 
 void AEntregasPracticaPev2Character::AplicarDanio(float danio)
@@ -70,11 +76,23 @@ void AEntregasPracticaPev2Character::BeginPlay()
 	{
 		HealtComponent->OnTakeDamage.AddDynamic(this,&AEntregasPracticaPev2Character::CountDamage);
 	}
+
+	
+	
 }
 
 void AEntregasPracticaPev2Character::CountDamage(int32 amount)
 {
-	TotalCount=+amount;
+	TotalCount+=amount;
+	
+	float PorcentajeVida = (float)HealtComponent->GetCurrentHealth() / (float)HealtComponent->GetMaxHealth();
+
+	//GetController()->
+	//CurrentHUD->HealthBar->SetPercent(PorcentajeVida);
+	GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Green,
+		FString::Printf(TEXT("le mando %f"), PorcentajeVida));
+	
+	
 }
 
 int32 AEntregasPracticaPev2Character::getDamage()
